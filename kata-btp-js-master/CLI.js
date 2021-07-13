@@ -6,7 +6,7 @@ class CLI {
   constructor(s)
   {
     // TODO FIXME !!!!!!!! Decomment the line after this one if you want to run tests !!!!!!!!!
-    // prompt = s;
+    prompt = s;
     this.COMMANDS = ["quit - quit the program",                     "order - create a new command",                     "help - " + "displays the help"];
     this.showDivider("Welcome to Efficent Command System 2.0");
 }
