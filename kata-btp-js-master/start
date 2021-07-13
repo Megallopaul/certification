@@ -1,0 +1,5 @@
+
+var CLI = require('./CLI.js')
+
+var monCLI = new CLI()
+monCLI.main()
