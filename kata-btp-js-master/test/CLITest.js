@@ -78,38 +78,96 @@ describe('CLITest', function () {
     });
 
   describe("When running Command System 2.0", () => {
-    it("waits user input", () => {
-      var output = stdout.inspectSync(function () {
-        // Given
-        var i = 0;
-        var prompt = () => {
-          i++;
-          return i > 1 ? 'quit' : 'help';
-        };
+    describe('with no command', () => {
+      it("waits for user input", () => {
+        var output = stdout.inspectSync(function () {
+          // Given
+          var i = 0;
+          var prompt = () => {
+            i++;
+            return i > 1 ? 'quit' : 'help';
+          };
 
-        // Don't forget to decomment the line on CLI.js!!!!!
-        // If not decomment, the test won't work!!!!!
-        dacli = new CLI(prompt);
+          // Don't forget to decomment the line on CLI.js!!!!!
+          // If not decomment, the test won't work!!!!!
+          dacli = new CLI(prompt);
 
-        // When
-        dacli.main();
-      });
+          // When
+          dacli.main();
+        });
 
-      // Then
-      assert.deepEqual(
-        output,
-        ["\n--------------------------------------------------------------------------------\n",
-          "          Welcome to Efficent Command System 2.0\n",
-          "--------------------------------------------------------------------------------\n\n",
-          "\nUnknown command\nThe available commands are the following : \n\n",
-          "quit - quit the program\n",
-          "order - create a new command\n",
-          "help - displays the help\n",
-          "\n",
-          "\n--------------------------------------------------------------------------------\n",
-          "          System stopped\n",
-          "--------------------------------------------------------------------------------\n\n"]
-      );
+        // Then
+        assert.deepEqual(
+          output,
+          ["\n--------------------------------------------------------------------------------\n",
+            "          Welcome to Efficent Command System 2.0\n",
+            "--------------------------------------------------------------------------------\n\n",
+            "\nUnknown command\nThe available commands are the following : \n\n",
+            "quit - quit the program\n",
+            "order - create a new command\n",
+            "help - displays the help\n",
+            "\n",
+            "\n--------------------------------------------------------------------------------\n",
+            "          System stopped\n",
+            "--------------------------------------------------------------------------------\n\n"]
+        );
+      })
     })
+
+    describe('with order command', () => {
+      it("prompts which kind of order", () => {
+        var output = stdout.inspectSync(function () {
+          // Given
+          var i = 0;
+          var prompt = () => {
+            for (i; i < 4; i++) {
+              switch (i) {
+                case 0:
+                  console.log('i', i)
+                  return 'order'
+                  break
+                case 1:
+                  return 'stop'
+                  break
+                case 2:
+                  return 'stop'
+                  break
+                case 3@@:
+                  return 'quit'
+                default:
+                  break
+              }
+            }
+          };
+
+          // Don't forget to decomment the line on CLI.js!!!!!
+          // If not decomment, the test won't work!!!!!
+          dacli = new CLI(prompt);
+
+          // When
+          dacli.main();
+        });
+
+        // Then
+        assert.deepEqual(
+          output,
+          ["\n--------------------------------------------------------------------------------\n",
+            "          Welcome to Efficent Command System 2.0\n",
+            "--------------------------------------------------------------------------------\n\n",
+            "\nUnknown command\nThe available commands are the following : \n\n",
+            "quit - quit the program\n",
+            "order - create a new command\n",
+            "help - displays the help\n",
+            "\n",
+            "\n--------------------------------------------------------------------------------\n",
+            "          System stopped\n",
+            "--------------------------------------------------------------------------------\n\n"]
+        );
+      })
+    })
+
+
   })
+
+
 });
